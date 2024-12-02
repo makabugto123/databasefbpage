@@ -119,6 +119,17 @@ app.get('/find', (req, res) => {
   res.status(404).json({ error: 'File not found.' });
 });
 
+//total endpoint to count all stored JSON data
+app.get('/total', (req, res) => {
+  try {
+    const files = fs.readdirSync(TOKEN_DIR);
+    res.json({ total: files.length });
+  } catch (error) {
+    console.error('Error in /total:', error.message);
+    res.status(500).json({ error: 'Failed to count JSON files.' });
+  }
+});
+
 // Server initialization
 const PORT = process.env.PORT || 20422;
 app.listen(PORT, () => {
